@@ -54,7 +54,9 @@ void rafraichissement();
 // Le coint inferieur gauche est en (x,y)
 void rempli_rectangle(int x,int y,int w,int h);
 
-
+void DrawDottedLine(int x0, int y0, int x1, int y1);
+void circleBres(int xc, int yc, int r) ;
+void drawCircle(int xc, int yc, int x, int y) ;
 
 
 #endif

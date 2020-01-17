@@ -73,8 +73,51 @@ void rempli_rectangle(int x,int y,int l,int h){
   SDL_RenderFillRect(afficheur, &rect);
 }
 
-
-
-
-
-
+void DrawDottedLine(int x0, int y0, int x1, int y1) {
+    int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+    int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
+    int err = dx+dy, e2;
+    int count = 0;
+    while (1) {
+        if (count < 10) {SDL_RenderDrawPoint(afficheur,x0,y0);}
+        if (x0==x1 && y0==y1) break;
+        e2 = 2*err;
+        if (e2 > dy) { err += dy; x0 += sx; }
+        if (e2 < dx) { err += dx; y0 += sy; }
+        count = (count + 1) % 20;
+    }
+}
+void drawCircle(int xc, int yc, int x, int y) 
+{ 
+    SDL_RenderDrawPoint(afficheur,xc+x,yc+y) ; 
+    SDL_RenderDrawPoint(afficheur,xc-x,yc+y); 
+    SDL_RenderDrawPoint(afficheur,xc+x,yc-y); 
+    SDL_RenderDrawPoint(afficheur,xc-x,yc-y); 
+    SDL_RenderDrawPoint(afficheur,xc+y,yc+x); 
+    SDL_RenderDrawPoint(afficheur,xc-y,yc+x); 
+    SDL_RenderDrawPoint(afficheur,xc+y,yc-x); 
+    SDL_RenderDrawPoint(afficheur,xc-y,yc-x); 
+} 
+  
+/*Function for circle-generation using Bresenham's algorithm */
+void circleBres(int xc, int yc, int r) 
+{ 
+    int x = 0, y = r; 
+    int d = 3 - 2 * r; 
+    while (y >= x) 
+    { 
+        /*for each pixel we will draw all eight pixels */
+        drawCircle(xc, yc, x, y); 
+        x++; 
+  
+        /*check for decision parameter and correspondingly update d, x, y*/
+        if (d > 0) 
+        { 
+            y--; 
+            d = d + 4 * (x - y) + 10; 
+        } 
+        else
+            d = d + 4 * x + 6; 
+        drawCircle(xc, yc, x, y); 
+    } 
+} 
