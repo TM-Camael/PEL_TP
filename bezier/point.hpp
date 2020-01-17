@@ -1,0 +1,42 @@
+#ifndef POINT_HPP
+#define POINT_HPP
+
+#include <iostream>
+
+using namespace std;
+
+class Point{
+private:
+  double x,y;
+public:
+  //Constructeur vide
+    Point(); 
+
+  //--------------
+  // Question 1.a
+  //--------------
+
+
+  //--------------
+  // Question 1.b
+  //--------------
+
+  
+};
+
+
+//--------------
+// Question 1.c
+//--------------
+
+
+//--------------
+// Question 1.d
+//--------------
+
+
+//--------------
+// Question 1.e
+//--------------
+
+#endif
