@@ -4,6 +4,8 @@
 static const double g=9.81; // en m.s-1
 static double l=1; //en m
 static double h=0.04; //en s
+static double k = 0.5;
+static double m = 1;
 
 //--------------
 // Question 7.a
@@ -12,8 +14,10 @@ static double h=0.04; //en s
 void dessine_pendule(double theta){
 	int x0, x1, y0, y1;
 	x0 = 400;
-	x1 = 0;
 	y0 = 300;
+	
+	// Les coordonnées du deuxième point sont relatifs par rapport au point central
+	x1 = 0;
 	y1 = 200;
 
 
@@ -23,8 +27,7 @@ void dessine_pendule(double theta){
 	double sinval;
 	sinval = sin(theta);
 
-
-	/* On utilise les fonctions de rotation d'un vecteur par rapport à un angle pour les positions du pendule */
+	/* On utilise les fonctions de rotation d'un vecteur par rapport à un angle pour les positions du pendule */	
 	int tempx1 = x1 * cosval - y1 * sinval;
 	int tempy1 = x1 * sinval + y1 * cosval;
 
@@ -43,7 +46,7 @@ void dessine_pendule(double theta){
 
 void f(double t,double theta,double omega,double& dtheta,double& domega){
 	dtheta = omega;
-	domega = -g/l * sin(theta);
+	domega = -g/l * sin(theta) - k/(m*l*l) * omega;
 }
   
 //--------------
@@ -84,6 +87,10 @@ void rk2(double t,double& theta,double& omega){
 	omega = omega + 1/2 * rk1omega;
 
 	rk1(t+h*0.5, theta, omega); 
+
+
+
+	
 
 }
 
