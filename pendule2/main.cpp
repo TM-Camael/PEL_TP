@@ -4,7 +4,7 @@
 static const double g=9.81; // en m.s-1
 static double l=1; //en m
 static double h=0.04; //en s
-static double k = -0.5;
+static double k = 0.5;
 static double m = 1;
 
 //--------------
@@ -14,8 +14,10 @@ static double m = 1;
 void dessine_pendule(double theta){
 	int x0, x1, y0, y1;
 	x0 = 400;
-	x1 = 0;
 	y0 = 300;
+	
+	// Les coordonnées du deuxième point sont relatifs par rapport au point central
+	x1 = 0;
 	y1 = 200;
 
 
@@ -25,8 +27,7 @@ void dessine_pendule(double theta){
 	double sinval;
 	sinval = sin(theta);
 
-
-
+	/* On utilise les fonctions de rotation d'un vecteur par rapport à un angle pour les positions du pendule */	
 	int tempx1 = x1 * cosval - y1 * sinval;
 	int tempy1 = x1 * sinval + y1 * cosval;
 
@@ -74,18 +75,18 @@ void rk2(double t,double& theta,double& omega){
 
 	f(t, theta, omega, dtheta, domega);
 
-	double rk1theta = theta;
+	double rk1theta = theta; 
 	double rk1omega = omega;
 
-	rk1(t, rk1theta, rk1omega);
+	rk1(t, rk1theta, rk1omega); //On calcule hf(tn, an) via RK1
 
-	rk1theta -= theta;
-	rk1omega -= omega;
+	rk1theta -= theta; //On soustrait la valeur d'an à an+1 (calculé grâce RK1) pour 
+	rk1omega -= omega; //obtenir hf(tn, an) au lieu de an + hf(tn, an)
 
-	theta = theta + h/2 * rk1theta;
-	omega = omega + h/2 * rk1omega;
+	theta = theta + 1/2 * rk1theta; //On calcule an+h/2*f(tn,an)
+	omega = omega + 1/2 * rk1omega;
 
-	rk1(t+h*0.5, theta, omega);
+	rk1(t+h*0.5, theta, omega); 
 
 
 
