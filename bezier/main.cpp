@@ -14,35 +14,29 @@ void faire_dessin(vector<Point> liste_point){
   rafraichissement();
 }
 
-bool bezier_negligeable(vector<Point> liste_point){
-  int distancep = distance(liste_point[0],liste_point[1])+distance(liste_point[1],liste_point[2])+distance(liste_point[2],liste_point[3]);
-  if(distancep>0.1){
+bool bezier_negligeable(Point a, Point b, Point c, Point d){
+  double distancep = distance(a,b)+distance(b,c)+distance(c,d);
+  if(distancep<0.1){
     return true;
   } else {
     return false;
   }
 }
 
-void bezierCurve(vector<Point> liste_points){ 
-  vector<Point> liste_points1;
-  vector<Point> liste_points2;
-  Point abcd;
-
-  liste_points1.push_back(millieu(liste_points[0],liste_points[1]));
-  liste_points1.push_back(millieu(liste_points[1],liste_points[2]));
-  liste_points1.push_back(millieu(liste_points[2],liste_points[3]));
-  
-  dessiner_point(liste_points1[0],2);
-  dessiner_point(liste_points1[1],2);
-  dessiner_point(liste_points1[2],2);
-  DrawDottedLine(liste_points1[0].lire_x() , liste_points1[0].lire_y(), liste_points1[1].lire_x(), liste_points1[1].lire_y());
-  DrawDottedLine(liste_points1[1].lire_x() , liste_points1[1].lire_y(), liste_points1[2].lire_x(), liste_points1[2].lire_y());
-  liste_points2.push_back(millieu(liste_points1[0],liste_points1[1]));
-  liste_points2.push_back(millieu(liste_points1[1],liste_points1[2]));
-  DrawDottedLine(liste_points2[0].lire_x(), liste_points2[0].lire_y(), liste_points2[1].lire_x(), liste_points2[1].lire_y());
-  abcd = millieu(liste_points2[0],liste_points2[1]);
-  dessiner_point(abcd, 4);
-  //circleBres(centerX,centerY,10);
+void bezierCurve(Point a, Point b, Point c, Point d){ 
+  cout<<a<<" "<<d<<endl;
+  if(bezier_negligeable(a,b,c,d)){
+    dessine_ligne(a.lire_x(),a.lire_y(),d.lire_x(),d.lire_y());
+  } else {
+    Point ab = millieu(a,b);  
+    Point bc = millieu(b,c);
+    Point cd = millieu(c,d);
+    Point abc = millieu(ab,bc);
+    Point bcd = millieu(bc,cd);
+    Point abcd = millieu(abc,bcd);    
+    bezierCurve(a,ab,abc,abcd);
+    bezierCurve(abcd,bcd,cd,d);
+  }
   rafraichissement();
 } 
 
@@ -93,9 +87,12 @@ int main(){
     cout<<liste_point.size()<<endl;
     if(liste_point.size()==4){
       cout<<"Dessin courbe de Bézier"<<endl;
-      bezier_negligeable(liste_point);
       faire_dessin(liste_point);
-      bezierCurve(liste_point);
+      Point a = liste_point[0];
+      Point b = liste_point[1];
+      Point c = liste_point[2];
+      Point d = liste_point[3];
+      bezierCurve(a,b,c,d);
     } else if(liste_point.size()==5){
       cout<<"Efface courbe de Bézier"<<endl;
       liste_point.clear();

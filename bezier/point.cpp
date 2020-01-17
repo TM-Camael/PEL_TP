@@ -9,7 +9,7 @@ Point::Point(){
 //--------------
 // Question 1.a
 //--------------
-Point::Point(int x1, int y1){
+Point::Point(double x1, double y1){
   x = x1;
   y = y1;
 }
@@ -17,10 +17,10 @@ Point::Point(int x1, int y1){
 //--------------
 // Question 1.b
 //--------------
-int Point::lire_x(){
+double Point::lire_x(){
   return x;
 }
-int Point::lire_y(){
+double Point::lire_y(){
   return y;
 }
 
@@ -28,7 +28,7 @@ int Point::lire_y(){
 // Question 1.c
 //--------------
 std::ostream& operator<<(std::ostream& os, Point& p){
-  return os << p.lire_x() << p.lire_y();
+  return os << p.lire_x() << "," << p.lire_y();
 }
 
 //--------------

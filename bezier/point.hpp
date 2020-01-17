@@ -15,13 +15,13 @@ public:
   //--------------
   // Question 1.a
   //--------------
-    Point(int x, int y);
+    Point(double x, double y);
 
   //--------------
   // Question 1.b
   //--------------
-    int lire_x();
-    int lire_y();
+    double lire_x();
+    double lire_y();
   
 };
 
