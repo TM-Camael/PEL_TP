@@ -3,7 +3,7 @@
 
 static const double g=9.81; // en m.s-1
 static double l=1; //en m
-static double h=0.04; //en s
+static double h=0.02; //en s
 
 //--------------
 // Question 7.a
